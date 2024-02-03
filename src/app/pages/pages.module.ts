@@ -42,9 +42,15 @@ import { HttpClientModule } from '@angular/common/http';
 import { ChatComponent } from './chat/chat.component';
 
 import { FilemanagerComponent } from './filemanager/filemanager.component';
+import { CountryListComponent } from './params/country-list/country-list.component';
+import { CountryDetailComponent } from './params/country-detail/country-detail.component';
+import { CityDetailComponent } from './params/city-detail/city-detail.component';
+import { CityListComponent } from './params/city-list/city-list.component';
+import { RegionListComponent } from './params/region-list/region-list.component';
+import { RegionDetailComponent } from './params/region-detail/region-detail.component';
 
 @NgModule({
-  declarations: [CalendarComponent, ChatComponent, FilemanagerComponent],
+  declarations: [CalendarComponent, ChatComponent, FilemanagerComponent, CountryListComponent, CountryDetailComponent, CityDetailComponent, CityListComponent, RegionListComponent, RegionDetailComponent],
   imports: [
     CommonModule,
     FormsModule,

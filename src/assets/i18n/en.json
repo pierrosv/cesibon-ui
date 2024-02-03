@@ -69,6 +69,15 @@
     "MENU": {
       "TEXT": "Menu"
     },
+    "PARAMS": {
+      "TEXT": "Parameters",
+      "BADGE": "04",
+      "LIST": {
+        "COUNTRY": "Countries",
+        "CITY": "Cities",
+        "REGION": "Regions"
+      }
+    },
     "DASHBOARDS": {
       "TEXT": "Dashboards",
       "BADGE": "04",

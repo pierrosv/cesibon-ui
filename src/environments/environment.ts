@@ -4,6 +4,11 @@
 
 export const environment = {
   production: false,
+  apiUrl: 'http://localhost:5051/api/v1',
+  countryUrl: 'country',
+  cityUrl: 'city',
+  regionUrl: 'region',
+
   defaultauth: 'fakebackend',
   firebaseConfig: {
     apiKey: "",

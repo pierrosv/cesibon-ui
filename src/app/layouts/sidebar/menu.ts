@@ -44,6 +44,31 @@ export const MENU: MenuItem[] = [
         ]
     },
     {
+      id: 2,
+      label: 'MENUITEMS.PARAMS.TEXT',
+      icon: 'bx-home-circle',
+      subItems: [
+        {
+          id: 3,
+          label: 'MENUITEMS.PARAMS.LIST.COUNTRY',
+          link: '/params/country-list',
+          parentId: 2
+        },
+        {
+          id: 4,
+          label: 'MENUITEMS.PARAMS.LIST.CITY',
+          link: '/params/city-list',
+          parentId: 2
+        },
+        {
+          id: 5,
+          label: 'MENUITEMS.PARAMS.LIST.REGION',
+          link: '/params/region-list',
+          parentId: 2
+        },
+      ]
+    },
+    {
         id: 8,
         isLayout: true
     },

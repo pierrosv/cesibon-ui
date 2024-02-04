@@ -3,6 +3,8 @@ export class CityModel {
   inCountryId: number;
   countryName: string;
   name: string;
+  center: SimplePoint;
+  zoomLevel: number;
 }
 export class RegionModel {
   id: number;

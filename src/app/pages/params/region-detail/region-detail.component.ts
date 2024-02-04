@@ -4,6 +4,9 @@ import {UntypedFormBuilder, UntypedFormGroup, Validators} from "@angular/forms";
 import {ActivatedRoute, Router} from "@angular/router";
 import {ParamsService} from "../../../core/services/params.service";
 import Swal from "sweetalert2";
+import {latLng, FeatureGroup, LatLngExpression, tileLayer, circle, polygon, marker, icon, Layer, featureGroup, DrawEvents} from 'leaflet';
+import * as L from 'leaflet';
+
 
 @Component({
   selector: 'app-region-detail',
@@ -83,6 +86,45 @@ export class RegionDetailComponent implements OnInit {
         },
         buttonsStyling: true
       });
+    }
+  }
+
+  regionMap = tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}', {
+    detectRetina: true,
+    attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ, TomTom, Intermap, iPC, USGS, FAO, NPS, NRCAN, GeoBase, Kadaster NL, Ordnance Survey, Esri Japan, METI, Esri China (Hong Kong), and the GIS User Community'
+  });
+
+  options = {
+    layers: [this.regionMap],
+    zoom: 2,
+    center: latLng([0, 0])
+  };
+  mapHeight = 650;
+  drawnItems: FeatureGroup = featureGroup();
+  zoom = this.options.zoom;
+  center = latLng(this.options.center);
+  drawOptions = {
+    edit: {
+      featureGroup: this.drawnItems
+    },
+    draw: {
+      marker : false,
+      polyline: false,
+      circlemarker: false,
+      circle: false
+    }
+  };
+  regionArea: any;
+
+  public onDrawCreated(e: any) {
+    this.regionArea = (e as DrawEvents.Created).layer;
+    this.drawnItems.addLayer(this.regionArea);
+  }
+
+  public onDrawStart(e: any) {
+    if (this.regionArea) {
+      this.drawnItems.removeLayer(this.regionArea);
+      this.regionArea = null;
     }
   }
 }

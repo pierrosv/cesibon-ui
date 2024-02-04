@@ -17,6 +17,8 @@ export class RegionDetailComponent implements OnInit {
   id: number;
   action: string;
   record: RegionModel;
+  centerLat: number;
+  centerLng: number;
   cities: CityModel[];
   recordForm!: UntypedFormGroup;
 
@@ -42,45 +44,75 @@ export class RegionDetailComponent implements OnInit {
     });
     this.paramsService.getAllCities().subscribe(x=> {
       this.cities = x;
+      this.paramsService.getRegionById(this.id).subscribe(x=> {
+        this.record = x;
+        this.patchForm();
+      });
     })
-    this.paramsService.getRegionById(this.id).subscribe(x=> {
-      this.record = x;
-      this.patchForm();
-    });
   }
 
   patchForm() {
     this.recordForm.patchValue({name: this.record.name});
     this.recordForm.patchValue({inCityId: this.record.inCityId});
+    //locate city and zoom there
+    this.cities.forEach(c=> {
+      if (c.id === this.record.inCityId) {
+        this.centerLat = c.center.latitude;
+        this.centerLng = c.center.longitude;
+        this.zoom = c.zoomLevel;
+        this.center = latLng(this.centerLat, this.centerLng);
+      }
+    });
+    const arr: LatLngExpression[][] = [];
+    this.record.regionPoints.forEach(r => {
+      const latlng = new L.LatLng(r.latitude, r.longitude);
+      // @ts-ignore
+      arr.push(latlng);
+    });
+
+    this.regionArea = polygon(arr);
+    this.drawnItems.addLayer(this.regionArea);
+
   }
   save() {
     if (this.recordForm.valid) {
-      let recordModel = new RegionModel();
-      recordModel.id = -1;
-      recordModel.name = this.recordForm.get('name')?.value;
-      recordModel.inCityId = this.recordForm.get('inCityId')?.value;
-
-      if (this.id > 0 ) {
-        recordModel.id = this.id;
-      }
-
-      this.paramsService.saveRegion(recordModel).subscribe( x => {
+      if (!this.regionArea || this.drawnItems.getLayers().length === 0) {
         Swal.fire({
-          icon: 'success',
-          title: 'Saved Successfully',
-          text:  'Saved Successfully',
+          icon: 'error',
+          title: 'Unable to save',
+          text: 'You must define an area for the region to be saved!',
           customClass: {
             confirmButton: 'btn btn-primary'
           },
-          buttonsStyling: true
+          buttonsStyling: false
         });
-        this.router.navigate(['params/region-list']);
-      });
+      } else {
+        let recordModel = new RegionModel();
+        recordModel.id = -1;
+        recordModel.name = this.recordForm.get('name')?.value;
+        recordModel.inCityId = this.recordForm.get('inCityId')?.value;
+
+        if (this.id > 0) {
+          recordModel.id = this.id;
+        }
+        this.paramsService.saveRegion(recordModel, this.regionArea).subscribe(x => {
+          Swal.fire({
+            icon: 'success',
+            title: 'Saved Successfully',
+            text: 'Saved Successfully',
+            customClass: {
+              confirmButton: 'btn btn-primary'
+            },
+            buttonsStyling: true
+          });
+          this.router.navigate(['params/region-list']);
+        });
+      }
     } else {
       Swal.fire({
         icon: 'error',
         title: 'Unable to save changes',
-        text:  'Unable to save changes',
+        text: 'Unable to save changes',
         customClass: {
           confirmButton: 'btn btn-primary'
         },
@@ -110,6 +142,7 @@ export class RegionDetailComponent implements OnInit {
     draw: {
       marker : false,
       polyline: false,
+      rectangle: false,
       circlemarker: false,
       circle: false
     }

@@ -3,7 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {CountryModel} from "../models/country.model";
 import {environment} from "../../../environments/environment";
-import {CityModel, RegionModel} from "../models/cityModel";
+import {CityModel, RegionModel, SimplePoint} from "../models/cityModel";
 
 @Injectable({
   providedIn: 'root'
@@ -66,8 +66,13 @@ export class ParamsService {
     return this.http.delete<boolean>(`${environment.apiUrl}/${environment.regionUrl}/${id}`);
   }
 
-  saveRegion(region: RegionModel):Observable<RegionModel> {
+  saveRegion(region: RegionModel, newRegion: any):Observable<RegionModel> {
     console.log('saving Region');
+    const points: SimplePoint[] = [];
+    newRegion._latlngs[0].forEach(c => {
+      points.push( new SimplePoint(c.lat, c.lng));
+    });
+    region.regionPoints = points;
     const fullUrl = `${environment.apiUrl}/${environment.regionUrl}/`;
     if (region.id <= 0) {
       return this.http.post<RegionModel>(fullUrl, region);

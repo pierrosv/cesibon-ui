@@ -11,7 +11,7 @@ import {CountryModel} from "../../../core/models/country.model";
   templateUrl: './country-list.component.html',
   styleUrl: './country-list.component.css'
 })
-export class CountryListComponent  implements OnInit  {
+export class CountryListComponent implements OnInit  {
   enditem: any
   // bread crumb items
   breadCrumbItems: Array<{}>;
@@ -27,7 +27,7 @@ export class CountryListComponent  implements OnInit  {
   }
 
   ngOnInit() {
-    this.breadCrumbItems = [{ label: 'Ecommerce' }, { label: 'O rders', active: true }];
+    this.breadCrumbItems = [{ label: 'Params' }, { label: 'Countries', active: true }];
     this.loadData();
   }
 

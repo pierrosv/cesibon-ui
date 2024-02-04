@@ -1,18 +1,8 @@
 export const environment = {
   production: true,
-  apiUrl: 'http://localhost:5051/api/v1',
+  apiUrl: 'https://istaff-api.thales.gr/api/v1',
+  identityUrl: 'identity',
   countryUrl: 'country',
   cityUrl: 'city',
-  regionUrl: 'region',
-  defaultauth: 'fakebackend',
-  firebaseConfig: {
-    apiKey: '',
-    authDomain: '',
-    databaseURL: '',
-    projectId: '',
-    storageBucket: '',
-    messagingSenderId: '',
-    appId: '',
-    measurementId: ''
-  }
+  regionUrl: 'region'
 };

@@ -52,13 +52,6 @@ import { OrdersEffects } from './store/Crypto/crypto.effects';
 import { CustomerEffects } from './store/customer/customer.effects';
 import { MailEffects } from './store/Email/email.effects';
 
-if (environment.defaultauth === 'firebase') {
-  initFirebaseBackend(environment.firebaseConfig);
-} else {
-  // tslint:disable-next-line: no-unused-expression
-  FakeBackendInterceptor;
-}
-
 export function createTranslateLoader(http: HttpClient): any {
   return new TranslateHttpLoader(http, 'assets/i18n/', '.json');
 }
@@ -72,8 +65,6 @@ export function createTranslateLoader(http: HttpClient): any {
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    AngularFireModule.initializeApp(environment.firebaseConfig),
-    AngularFireAuthModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

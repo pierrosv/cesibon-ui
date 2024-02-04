@@ -8,18 +8,7 @@ export const environment = {
   countryUrl: 'country',
   cityUrl: 'city',
   regionUrl: 'region',
-
-  defaultauth: 'fakebackend',
-  firebaseConfig: {
-    apiKey: "",
-    authDomain: "",
-    databaseURL: "",
-    projectId: "",
-    storageBucket: "",
-    messagingSenderId: "",
-    appId: "",
-    measurementId: ""
-  }
+  identityUrl: 'identity',
 };
 
 /*

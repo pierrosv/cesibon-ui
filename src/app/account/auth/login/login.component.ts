@@ -28,17 +28,21 @@ export class LoginComponent implements OnInit {
   year: number = new Date().getFullYear();
 
   // tslint:disable-next-line: max-line-length
-  constructor(private formBuilder: UntypedFormBuilder, private route: ActivatedRoute, private router: Router, private authenticationService: AuthenticationService, private store: Store,
-    private authFackservice: AuthfakeauthenticationService) { }
+  constructor(private formBuilder: UntypedFormBuilder,
+              private route: ActivatedRoute,
+              private router: Router,
+              private authenticationService: AuthenticationService,
+              private store: Store) { }
 
   ngOnInit() {
     if (localStorage.getItem('currentUser')) {
+      console.log('here');
       this.router.navigate(['/']);
     }
     // form validation
     this.loginForm = this.formBuilder.group({
-      email: ['admin@themesbrand.com', [Validators.required, Validators.email]],
-      password: ['123456', [Validators.required]],
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required]],
     });
   }
 
@@ -53,9 +57,13 @@ export class LoginComponent implements OnInit {
 
     const email = this.f['email'].value; // Get the username from the form
     const password = this.f['password'].value; // Get the password from the form
+    this.authenticationService.signinUser(email, password).subscribe( x=> {
+      this.router.navigate(['/']);
+    }, error => {
 
+    });
     // Login Api
-    this.store.dispatch(login({ email: email, password: password }));
+    // this.store.dispatch(login({ email: email, password: password }));
   }
 
   /**

@@ -9,6 +9,7 @@ export class RegionModel {
   inCountryId: number;
   countryName: string;
   inCityId: number;
+  cityName: string;
   name: string;
   regionPoints: SimplePoint[];
 }

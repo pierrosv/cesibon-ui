@@ -67,6 +67,7 @@ export class ParamsService {
   }
 
   saveRegion(region: RegionModel):Observable<RegionModel> {
+    console.log('saving Region');
     const fullUrl = `${environment.apiUrl}/${environment.regionUrl}/`;
     if (region.id <= 0) {
       return this.http.post<RegionModel>(fullUrl, region);

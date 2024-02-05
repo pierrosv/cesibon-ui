@@ -31,11 +31,12 @@ export class TopbarComponent implements OnInit {
   valueset: any;
   theme: any;
   layout: string;
+  username: string;
   dataLayout$: Observable<string>;
   // Define layoutMode as a property
 
   constructor(@Inject(DOCUMENT) private document: any, private router: Router, private authService: AuthenticationService,
-    private authFackservice: AuthfakeauthenticationService,
+
     public languageService: LanguageService,
     public translate: TranslateService,
     public _cookiesService: CookieService, public store: Store<RootReducerState>) {
@@ -71,6 +72,7 @@ export class TopbarComponent implements OnInit {
     } else {
       this.flagvalue = val.map(element => element.flag);
     }
+    this.username = this.authService.getCurrentUserProfile.lastName + ' ' + this.authService.getCurrentUserProfile.firstName;
   }
 
   setLanguage(text: string, lang: string, flag: string) {

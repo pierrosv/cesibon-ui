@@ -6,6 +6,7 @@ export const environment = {
   production: false,
   apiUrl: 'http://localhost:5051/api/v1',
   countryUrl: 'country',
+  estateUrl: 'estate',
   cityUrl: 'city',
   regionUrl: 'region',
   identityUrl: 'identity',

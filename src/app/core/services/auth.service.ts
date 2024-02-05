@@ -121,6 +121,7 @@ export class AuthenticationService {
 }
 
 export interface ApplicationUser {
+  id: number;
   userId: number;
   token: string;
   refreshToken: string;

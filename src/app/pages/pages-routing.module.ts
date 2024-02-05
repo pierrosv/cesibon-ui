@@ -5,13 +5,20 @@ import { CalendarComponent } from './calendar/calendar.component';
 import { ChatComponent } from './chat/chat.component';
 import { DefaultComponent } from './dashboards/default/default.component';
 import { FilemanagerComponent } from './filemanager/filemanager.component';
+import {OwnerEstateListComponent} from "./owner-estate-list/owner-estate-list.component";
+import {OwnerEstateEditorComponent} from "./owner-estate-editor/owner-estate-editor.component";
+import {OwnerEstateViewerComponent} from "./owner-estate-viewer/owner-estate-viewer.component";
+import {CoreDashboardComponent} from "./dashboards/core-dashboard/core-dashboard.component";
 
 const routes: Routes = [
   // { path: '', redirectTo: 'dashboard' },
   {
     path: "",
-    component: DefaultComponent
+    component: CoreDashboardComponent
   },
+  { path: 'owner-estate-list', component: OwnerEstateListComponent },
+  { path: 'owner-estate-editor/:id', component: OwnerEstateEditorComponent },
+  { path: 'owner-estate-viewer/:id', component: OwnerEstateViewerComponent },
   { path: 'dashboard', component: DefaultComponent },
   { path: 'calendar', component: CalendarComponent },
   { path: 'chat', component: ChatComponent },

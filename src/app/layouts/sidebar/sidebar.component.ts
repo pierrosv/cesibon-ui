@@ -10,6 +10,7 @@ import { MenuItem } from './menu.model';
 import { TranslateService } from '@ngx-translate/core';
 import {ESTATEOWNERMENU} from "./estateOwnerMenu";
 import {AuthenticationService} from "../../core/services/auth.service";
+import {ADMINMENU} from "./adminMenu";
 
 @Component({
   selector: 'app-sidebar',
@@ -149,7 +150,7 @@ export class SidebarComponent implements OnInit, AfterViewInit, OnChanges {
       if (this.authSrv.getCurrentUserProfile.role === 'EstateOwner') {
         this.menuItems = ESTATEOWNERMENU;
       } else {
-        this.menuItems = MENU;
+        this.menuItems = ADMINMENU;
       }
     }
   }

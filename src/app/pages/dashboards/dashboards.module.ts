@@ -22,9 +22,11 @@ import { SaasComponent } from './saas/saas.component';
 import { CryptoComponent } from './crypto/crypto.component';
 import { BlogComponent } from './blog/blog.component';
 import { JobsComponent } from './jobs/jobs.component';
+import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
+import { CoreDashboardComponent } from './core-dashboard/core-dashboard.component';
 
 @NgModule({
-  declarations: [DefaultComponent, SaasComponent, CryptoComponent, BlogComponent, JobsComponent],
+  declarations: [DefaultComponent, SaasComponent, CryptoComponent, BlogComponent, JobsComponent, AdminDashboardComponent, CoreDashboardComponent],
   imports: [
     CommonModule,
     FormsModule,

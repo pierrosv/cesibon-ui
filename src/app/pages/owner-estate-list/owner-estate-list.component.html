@@ -1,0 +1,67 @@
+<!-- page title -->
+<div class="container-fluid">
+  <!-- page title -->
+  <app-page-title title="ESTATES" [breadcrumbItems]="breadCrumbItems"></app-page-title>
+
+  <div class="row">
+    <div class="col-sm-8">
+      <div class="text-sm-start">
+        <button type="button" class="btn btn-success btn-rounded mb-2 me-2" (click)="editRecord(-1)"><i class="mdi mdi-plus mr-1"></i>
+          Add</button>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+
+    <div class="col-lg-12">
+      <div class="row mb-3">
+        <div class="col-xl-4 col-sm-6">
+          <div class="mt-2">
+            <h5>List of Estates</h5>
+          </div>
+        </div>
+<!--        <div class="col-lg-8 col-sm-6">-->
+<!--          <form class="mt-4 mt-sm-0 float-sm-end d-flex align-items-center">-->
+<!--            <div class="search-box me-2">-->
+<!--            </div>-->
+<!--            <ul class="nav nav-pills product-view-nav">-->
+<!--              <li class="nav-item">-->
+<!--                <a class="nav-link active" href="javascript: void(0);"><i class="bx bx-grid-alt align-middle"></i></a>-->
+<!--              </li>-->
+<!--              <li class="nav-item">-->
+<!--                <a class="nav-link" href="javascript: void(0);"><i class="bx bx-list-ul align-middle"></i></a>-->
+<!--              </li>-->
+<!--            </ul>-->
+<!--          </form>-->
+<!--        </div>-->
+      </div>
+      <div class="row" id="product-list">
+        @for(estate of estates;track $index){
+          <div class="col-xl-4 col-sm-6">
+            <div class="card">
+              <div class="card-body">
+                <div class="mt-4 d-flex align-items-center">
+                  <div class="flex-grow-1">
+                    <h5 class="mb-1 text-truncate"><a href="javascript: void(0);" [routerLink]="['/pages/owner-estate-editor',estate.id]" class="text-dark">{{estate.name}}</a></h5>
+                    <div class="badge bg-success font-size-11"><i class="bx bxs-star me-1"></i>{{estate.noOfRooms}}</div>
+                  </div>
+                  <div class="flex-shrink-0">
+                    <h5 class="my-0"><b>${{estate.noOfRooms}}</b></h5>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        }
+      </div>
+<!--      <div class="row">-->
+<!--        <div class="col-lg-12">-->
+<!--          <div class="text-center mt-2 mb-5">-->
+<!--            <a href="javascript:void(0);" class="text-success"><i class="bx bx-loader bx-spin font-size-18 align-middle me-1"></i> Load more </a>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+    </div>
+    <!-- end row -->
+  </div>
+</div>

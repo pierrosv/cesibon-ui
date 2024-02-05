@@ -8,6 +8,8 @@ import { HttpClient } from '@angular/common/http';
 import { MENU } from './menu';
 import { MenuItem } from './menu.model';
 import { TranslateService } from '@ngx-translate/core';
+import {ESTATEOWNERMENU} from "./estateOwnerMenu";
+import {AuthenticationService} from "../../core/services/auth.service";
 
 @Component({
   selector: 'app-sidebar',
@@ -28,7 +30,11 @@ export class SidebarComponent implements OnInit, AfterViewInit, OnChanges {
 
   @ViewChild('sideMenu') sideMenu: ElementRef;
 
-  constructor(private eventService: EventService, private router: Router, public translate: TranslateService, private http: HttpClient) {
+  constructor(private eventService: EventService,
+              private router: Router,
+              private authSrv: AuthenticationService,
+              public translate: TranslateService,
+              private http: HttpClient) {
     router.events.forEach((event) => {
       if (event instanceof NavigationEnd) {
         this._activateMenuDropdown();
@@ -139,7 +145,13 @@ export class SidebarComponent implements OnInit, AfterViewInit, OnChanges {
    * Initialize
    */
   initialize(): void {
-    this.menuItems = MENU;
+    if (this.authSrv.isLoggedIn) {
+      if (this.authSrv.getCurrentUserProfile.role === 'EstateOwner') {
+        this.menuItems = ESTATEOWNERMENU;
+      } else {
+        this.menuItems = MENU;
+      }
+    }
   }
 
   /**

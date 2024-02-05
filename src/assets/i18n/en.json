@@ -110,6 +110,9 @@
     "CALENDAR": {
       "TEXT": "Calendar"
     },
+    "ESTATELIST": {
+      "TEXT": "Estate List"
+    },
     "CHAT": {
       "TEXT": "Chat",
       "BADGE": "New"

@@ -26,6 +26,7 @@ export class ParamsService {
   }
 
   saveCountry(country: CountryModel):Observable<CountryModel> {
+    console.log(country);
     const fullUrl = `${environment.apiUrl}/${environment.countryUrl}/`;
     if (country.id <= 0) {
       return this.http.post<CountryModel>(fullUrl, country);

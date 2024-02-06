@@ -9,6 +9,8 @@ import {OwnerEstateListComponent} from "./owner-estate-list/owner-estate-list.co
 import {OwnerEstateEditorComponent} from "./owner-estate-editor/owner-estate-editor.component";
 import {OwnerEstateViewerComponent} from "./owner-estate-viewer/owner-estate-viewer.component";
 import {CoreDashboardComponent} from "./dashboards/core-dashboard/core-dashboard.component";
+import {EstateOwnerComponent} from "./profile/estate-owner/estate-owner.component";
+import {CoreProfileComponent} from "./profile/core-profile/core-profile.component";
 
 const routes: Routes = [
   // { path: '', redirectTo: 'dashboard' },
@@ -19,6 +21,8 @@ const routes: Routes = [
   { path: 'owner-estate-list', component: OwnerEstateListComponent },
   { path: 'owner-estate-editor/:id', component: OwnerEstateEditorComponent },
   { path: 'owner-estate-viewer/:id', component: OwnerEstateViewerComponent },
+  { path: 'profile/core-profile', component: CoreProfileComponent },
+  { path: 'profile/estate-owner', component: EstateOwnerComponent },
   { path: 'dashboard', component: DefaultComponent },
   { path: 'calendar', component: CalendarComponent },
   { path: 'chat', component: ChatComponent },

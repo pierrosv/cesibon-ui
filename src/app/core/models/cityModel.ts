@@ -26,22 +26,37 @@ export class EstateSimple {
   estateTypeName: string;
   estateStatus: number;
   estateStatusName: string;
+  rentalPeriodType: number;
+  rentalPeriodTypeName: string;
+  fromDate: Date;
+  toDate: Date;
   name: string;
   inRegionId: number;
   noOfRooms: number;
+  askingPrice: number;
   inRegionName: string;
   mainImage: string;
 }
 
 export class EstateFull {
   id: number;
+  estateOwnerId: number;
   estateType: number;
   estateTypeName: string;
   estateStatus: number;
   estateStatusName: string;
+  rentalPeriodType: number;
+  rentalPeriodTypeName: string;
+  fromDate: Date;
+  toDate: Date;
   name: string;
+  ownerNotes: string;
+  adminNotes: string;
   inRegionId: number;
   noOfRooms: number;
+  noOfInSuites: number;
+  totalSquareMeters: number;
+  askingPrice: number;
   inRegionName: string;
   mainImage: string;
   coordinates: SimplePoint;
@@ -63,3 +78,62 @@ export class EstateFull {
   hasHotWater: boolean;
   hasAirCondition: boolean;
 }
+
+export class DataModel {
+  id: number;
+  name: string;
+}
+export const estateTypes: DataModel[]  = [
+  {
+    id: 10,
+    name: 'LineStaff',
+  },
+  {
+    id: 20,
+    name: 'Shared',
+  },
+  {
+    id: 30,
+    name: 'Single',
+  },
+  {
+    id: 40,
+    name: 'Studio',
+  },
+  {
+    id: 50,
+    name: 'Floor',
+  },
+  {
+    id: 60,
+    name: 'Villa',
+  }
+]
+
+
+export const rentalPeriodType: DataModel[] = [
+  // {
+  //   id: 10,
+  //   name: 'Day',
+  // },
+  // {
+  //   id: 20,
+  //   name: 'Week',
+  // },
+  // {
+  //   id: 30,
+  //   name: 'Month',
+  // },
+  // {
+  //   id: 40,
+  //   name: 'Quarter',
+  // },
+  {
+    id: 50,
+    name: 'Season',
+  },
+  {
+    id: 60,
+    name: 'Year',
+  }
+]

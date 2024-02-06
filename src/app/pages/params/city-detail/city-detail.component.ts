@@ -4,8 +4,9 @@ import {UntypedFormBuilder, UntypedFormGroup, Validators} from "@angular/forms";
 import {ActivatedRoute, Router} from "@angular/router";
 import {ParamsService} from "../../../core/services/params.service";
 import Swal from "sweetalert2";
-import {CityModel, SimplePoint} from "../../../core/models/cityModel";
+import {CityModel, EstateSimple, SimplePoint} from "../../../core/models/cityModel";
 import {DrawEvents, featureGroup, FeatureGroup, icon, latLng, marker, tileLayer} from "leaflet";
+import {EstateService} from "../../../core/services/estate.service";
 
 @Component({
   selector: 'app-city-detail',
@@ -29,7 +30,7 @@ export class CityDetailComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.action = 'Edit Country';
+    this.action = 'Edit City';
     this.id = +this.route.snapshot.paramMap.get('id');
     if (this.id == -1) {
       this.action = 'Add City';

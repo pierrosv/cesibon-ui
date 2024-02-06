@@ -56,6 +56,10 @@ import { OwnerEstateListComponent } from './owner-estate-list/owner-estate-list.
 import { OwnerEstateEditorComponent } from './owner-estate-editor/owner-estate-editor.component';
 import { OwnerEstateViewerComponent } from './owner-estate-viewer/owner-estate-viewer.component';
 import {NgxSliderModule} from "ngx-slider-v2";
+import { EstateOwnerComponent } from './profile/estate-owner/estate-owner.component';
+import { CoreProfileComponent } from './profile/core-profile/core-profile.component';
+import {DropzoneModule} from "ngx-dropzone-wrapper";
+import {NgSelectModule} from "@ng-select/ng-select";
 
 @NgModule({
   declarations: [CalendarComponent, ChatComponent,
@@ -69,7 +73,7 @@ import {NgxSliderModule} from "ngx-slider-v2";
     CompanyListComponent,
     CompanyDetailComponent,
     OwnerEstateListComponent,
-    OwnerEstateEditorComponent, OwnerEstateViewerComponent],
+    OwnerEstateEditorComponent, OwnerEstateViewerComponent, EstateOwnerComponent, CoreProfileComponent],
   imports: [
     CommonModule,
     FormsModule,
@@ -107,7 +111,9 @@ import {NgxSliderModule} from "ngx-slider-v2";
     PickerModule,
     LeafletModule,
     LeafletDrawModule,
-    NgxSliderModule
+    NgxSliderModule,
+    DropzoneModule,
+    NgSelectModule
   ],
 })
 export class PagesModule { }

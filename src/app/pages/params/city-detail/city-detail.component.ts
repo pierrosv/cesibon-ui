@@ -41,6 +41,7 @@ export class CityDetailComponent implements OnInit {
       name: ['', [Validators.required]],
       inCountryId: [0, [Validators.required]],
       zoomLevel: [1],
+      weight: [1],
     });
 
     this.paramsService.getAllCountries().subscribe(x=> {
@@ -57,6 +58,7 @@ export class CityDetailComponent implements OnInit {
     this.recordForm.patchValue({name: this.record.name});
     this.recordForm.patchValue({inCountryId: this.record.inCountryId});
     this.recordForm.patchValue({zoomLevel: this.record.zoomLevel});
+    this.recordForm.patchValue({weight: this.record.weight});
     // this.recordForm.patchValue({longitude: this.record.center.longitude});
     // this.recordForm.patchValue({latitude: this.record.center.latitude});
     this.center = latLng(this.record.center.latitude, this.record.center.longitude);
@@ -76,6 +78,7 @@ export class CityDetailComponent implements OnInit {
       recordModel.name = this.recordForm.get('name')?.value;
       recordModel.inCountryId = this.recordForm.get('inCountryId')?.value;
       recordModel.zoomLevel = this.recordForm.get('zoomLevel')?.value;
+      recordModel.weight = this.recordForm.get('weight')?.value;
       recordModel.center = new SimplePoint(this.centerLat, this.centerLng);
 
       if (this.id > 0 ) {

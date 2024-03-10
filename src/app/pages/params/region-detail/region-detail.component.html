@@ -13,8 +13,9 @@
           <form (ngSubmit)="save()" [formGroup]="recordForm">
             <div data-repeater-list="outer-group" class="outer">
               <div data-repeater-item class="outer">
+
                 <div class="row mb-4">
-                  <label for="name" class="col-form-label col-lg-2">City</label>
+                  <label for="inCityId" class="col-form-label col-lg-2">City</label>
                   <div class="col-lg-10">
                     <select class="form-select" id="inCityId" name="inCityId" formControlName="inCityId" >
                       <option *ngFor="let city of cities" [value]="city.id">
@@ -31,40 +32,66 @@
                   </div>
                 </div>
 
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-lg-12">
-                <div class="card">
-                  <div class="card-body">
-                    <h4 class="card-title mb-4">Region definition</h4>
-                    <div style="height: {{mapHeight}}px"
-                         leaflet
-                         leafletDraw
-                         [leafletDrawOptions]="drawOptions"
-                         (leafletDrawCreated)="onDrawCreated($event)"
-                         [leafletOptions]="options"
+                <div class="row mb-4">
+                  <label for="dayWeight" class="col-form-label col-lg-2">Day Weight</label>
+                  <div class="col-lg-10">
+                    <input id="dayWeight" name="dayWeight" type="text" formControlName="dayWeight" class="form-control" placeholder="Day Weight...">
+                  </div>
+                </div>
 
-                         [leafletZoom]="zoom"
-                         [leafletCenter]="center"
-                         (leafletDrawStart)="onDrawStart($event)"
-                    >
-                      <div [leafletLayer]="drawnItems"></div>
+                <div class="row mb-4">
+                  <label for="monthWeight" class="col-form-label col-lg-2">Month Weight</label>
+                  <div class="col-lg-10">
+                    <input id="monthWeight" name="monthWeight" type="text" formControlName="monthWeight" class="form-control" placeholder="Month Weight...">
+                  </div>
+                </div>
+
+                <div class="row mb-4">
+                  <label for="seasonWeight" class="col-form-label col-lg-2">Season Weight</label>
+                  <div class="col-lg-10">
+                    <input id="seasonWeight" name="seasonWeight" type="text" formControlName="seasonWeight" class="form-control" placeholder="Season Weight...">
+                  </div>
+                </div>
+
+                <div class="row mb-4">
+                  <label for="yearWeight" class="col-form-label col-lg-2">Year Weight</label>
+                  <div class="col-lg-10">
+                    <input id="yearWeight" name="yearWeight" type="text" formControlName="yearWeight" class="form-control" placeholder="Year Weight...">
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-lg-12">
+                    <div class="card">
+                      <div class="card-body">
+                        <h4 class="card-title mb-4">Region definition</h4>
+                        <div style="height: {{mapHeight}}px"
+                             leaflet
+                             leafletDraw
+                             [leafletDrawOptions]="drawOptions"
+                             (leafletDrawCreated)="onDrawCreated($event)"
+                             [leafletOptions]="options"
+
+                             [leafletZoom]="zoom"
+                             [leafletCenter]="center"
+                             (leafletDrawStart)="onDrawStart($event)"
+                        >
+                          <div [leafletLayer]="drawnItems"></div>
+                        </div>
+
+                      </div>
+
                     </div>
                   </div>
                 </div>
+
               </div>
             </div>
-
-
             <div class="row justify-content-end">
               <div class="col-lg-10">
                 <button type="submit" class="btn btn-primary">Save</button>
               </div>
             </div>
           </form>
-
-
         </div>
       </div>
     </div>

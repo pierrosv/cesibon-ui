@@ -5,10 +5,15 @@ export class CityModel {
   name: string;
   center: SimplePoint;
   zoomLevel: number;
+  weight: number;
 }
 export class RegionModel {
   id: number;
   inCountryId: number;
+  dayWeight: number;
+  monthWeight: number;
+  seasonWeight: number;
+  yearWeight: number;
   countryName: string;
   inCityId: number;
   cityName: string;
@@ -60,6 +65,8 @@ export class EstateFull {
   inRegionName: string;
   mainImage: string;
   coordinates: SimplePoint;
+  cityCenter: SimplePoint;
+  cityZoom: number;
   images: string[];
   hasLivingRoom: boolean;
   hasDiningArea: boolean;

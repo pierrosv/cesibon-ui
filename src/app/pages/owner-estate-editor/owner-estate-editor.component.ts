@@ -7,7 +7,7 @@ import {ParamsService} from "../../core/services/params.service";
 import {CityModel, EstateFull, estateTypes, rentalPeriodType, SimplePoint} from "../../core/models/cityModel";
 import {EstateService} from "../../core/services/estate.service";
 
-import {latLng, marker} from "leaflet";
+import {DrawEvents, featureGroup, FeatureGroup, latLng, marker, tileLayer} from "leaflet";
 import Swal from "sweetalert2";
 import {AuthenticationService} from "../../core/services/auth.service";
 
@@ -23,10 +23,14 @@ export class OwnerEstateEditorComponent  implements OnInit {
   lng: number;
   cities: CityModel[];
   estate: EstateFull;
+  centerLat: number;
+  centerLng: number;
+  protected readonly estateTypes = estateTypes;
+  protected readonly rentalPeriodType = rentalPeriodType;
+
 
   constructor(private formBuilder: UntypedFormBuilder,
               private route: ActivatedRoute,
-              private http: HttpClient,
               private estateSrv: EstateService,
               private authSrv: AuthenticationService,
               private router: Router) {
@@ -53,7 +57,6 @@ export class OwnerEstateEditorComponent  implements OnInit {
       this.action = 'Add';
     }
     this.breadCrumbItems = [{ label: 'Estate' }, { label: this.action + ' Estate', active: true }];
-
 
     this.estateForm = this.formBuilder.group({
       name: ['', [Validators.required]],
@@ -118,8 +121,14 @@ export class OwnerEstateEditorComponent  implements OnInit {
     this.estateForm.patchValue({hasView: this.estate.hasView});
     this.estateForm.patchValue({hasHotWater: this.estate.hasHotWater});
     this.estateForm.patchValue({hasAirCondition: this.estate.hasAirCondition});
-    // this.center = latLng(this.record.center.latitude, this.record.center.longitude);
-    //this.markerPoint = latLng(this.record.center.latitude, this.record.center.longitude);
+    this.center = latLng(this.estate.cityCenter.latitude, this.estate.cityCenter.longitude);
+    this.markerPoint = latLng(this.estate.coordinates.latitude, this.estate.coordinates.longitude);
+    this.regionArea = marker(this.markerPoint);
+
+    this.drawnItems.addLayer(this.regionArea);
+    this.centerLat = this.estate.coordinates.latitude;
+    this.centerLng = this.estate.coordinates.longitude;
+    this.zoom = this.estate.cityZoom;
   }
 
   save() {
@@ -157,6 +166,7 @@ export class OwnerEstateEditorComponent  implements OnInit {
       recordModel.hasView = this.estateForm.get('hasView')?.value;
       recordModel.hasHotWater = this.estateForm.get('hasHotWater')?.value;
       recordModel.hasAirCondition = this.estateForm.get('hasAirCondition')?.value;
+      recordModel.coordinates = new SimplePoint(this.centerLat, this.centerLng);
 
       if (this.id > 0 ) {
         recordModel.id = this.id;
@@ -224,8 +234,63 @@ export class OwnerEstateEditorComponent  implements OnInit {
   removeFile(event: any) {
     this.uploadedFiles.splice(this.uploadedFiles.indexOf(event), 1);
   }
+  ///-- MAP
+  cityMap = tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}', {
+    detectRetina: true,
+    attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ, TomTom, Intermap, iPC, USGS, FAO, NPS, NRCAN, GeoBase, Kadaster NL, Ordnance Survey, Esri Japan, METI, Esri China (Hong Kong), and the GIS User Community'
+  });
 
-  protected readonly estateTypes = estateTypes;
-  protected readonly rentalPeriodType = rentalPeriodType;
+  options = {
+    layers: [this.cityMap],
+    zoom: 10,
+    center: latLng([0, 0])
+  };
+
+  mapHeight = 650;
+  drawnItems: FeatureGroup = featureGroup();
+
+  zoom = this.options.zoom;
+  center = latLng(this.options.center);
+  markerPoint = latLng(this.options.center);
+
+  drawOptions = {
+    edit: {
+      featureGroup: this.drawnItems
+    },
+    draw: {
+      marker : true,
+      polyline: false,
+      circlemarker: false,
+      rectangle: false,
+      polygon: false,
+      circle: false
+    }
+  };
+  regionArea: any;
+
+  // summit = marker([ 37.446154, 25.368614 ], {
+  //   icon: icon({
+  //     iconSize: [ 25, 41 ],
+  //     iconAnchor: [ 13, 41 ],
+  //     iconUrl: 'leaflet/marker-icon.png',
+  //     shadowUrl: 'leaflet/marker-shadow.png'
+  //   })
+  // });
+  public onDrawCreated(e: any) {
+
+
+    this.regionArea = (e as DrawEvents.Created).layer;
+
+    this.centerLat = this.regionArea._latlng.lat;
+    this.centerLng = this.regionArea._latlng.lng;
+    this.drawnItems.addLayer(this.regionArea);
+  }
+
+  public onDrawStart(e: any) {
+    if (this.regionArea) {
+      this.drawnItems.removeLayer(this.regionArea);
+      this.regionArea = null;
+    }
+  }
 }
 

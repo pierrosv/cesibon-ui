@@ -12,7 +12,8 @@ export class RegionModel {
   inCountryId: number;
   dayWeight: number;
   monthWeight: number;
-  seasonWeight: number;
+  winterSeasonWeight: number;
+  summerSeasonWeight: number;
   yearWeight: number;
   countryName: string;
   inCityId: number;

@@ -43,7 +43,8 @@ export class RegionDetailComponent implements OnInit {
       inCityId: [0, [Validators.required]],
       dayWeight: [0, [Validators.required]],
       monthWeight: [0, [Validators.required]],
-      seasonWeight: [0, [Validators.required]],
+      winterSeasonWeight: [0, [Validators.required]],
+      summerSeasonWeight: [0, [Validators.required]],
       yearWeight: [0, [Validators.required]]
     });
     this.paramsService.getAllCities().subscribe(x=> {
@@ -60,7 +61,8 @@ export class RegionDetailComponent implements OnInit {
     this.recordForm.patchValue({inCityId: this.record.inCityId});
     this.recordForm.patchValue({dayWeight: this.record.dayWeight});
     this.recordForm.patchValue({monthWeight: this.record.monthWeight});
-    this.recordForm.patchValue({seasonWeight: this.record.seasonWeight});
+    this.recordForm.patchValue({winterSeasonWeight: this.record.winterSeasonWeight});
+    this.recordForm.patchValue({summerSeasonWeight: this.record.summerSeasonWeight});
     this.recordForm.patchValue({yearWeight: this.record.yearWeight});
     //locate city and zoom there
     this.cities.forEach(c=> {
@@ -101,7 +103,8 @@ export class RegionDetailComponent implements OnInit {
         recordModel.inCityId = this.recordForm.get('inCityId')?.value;
         recordModel.dayWeight = this.recordForm.get('dayWeight')?.value;
         recordModel.monthWeight = this.recordForm.get('monthWeight')?.value;
-        recordModel.seasonWeight = this.recordForm.get('seasonWeight')?.value;
+        recordModel.winterSeasonWeight = this.recordForm.get('winterSeasonWeight')?.value;
+        recordModel.summerSeasonWeight = this.recordForm.get('summerSeasonWeight')?.value;
         recordModel.yearWeight = this.recordForm.get('yearWeight')?.value;
 
         if (this.id > 0) {

@@ -123,7 +123,7 @@ export class RoomInfo {
   hasAirCondition: boolean;
   noOfSingleBeds: number;
   noOfDoubleBeds: number;
-  noOfBunBeds: number;
+  noOfBunkBeds: number;
 }
 
 

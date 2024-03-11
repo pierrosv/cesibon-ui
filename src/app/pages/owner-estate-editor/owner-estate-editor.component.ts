@@ -100,6 +100,20 @@ export class OwnerEstateEditorComponent  implements OnInit {
 
     this.estateSrv.getEstateById(this.id).subscribe(x=> {
       this.estate = x;
+      if (this.estate.noOfRooms >0 && (!this.estate.rooms || this.estate.rooms.length == 0)) {
+        this.roomNumbers = Array(this.estate.noOfRooms).fill(3).map((x,i)=>i);
+        this.estate.rooms = [];
+        this.roomNumbers.forEach(x => {
+          let newRoom = new RoomInfo();
+          newRoom.roomNo = x + 1;
+          newRoom.surface = 0;
+          newRoom.noOfSingleBeds = 0;
+          newRoom.noOfDoubleBeds = 0;
+          newRoom.noOfBunkBeds = 0;
+          this.estate.rooms.push(newRoom);
+        });
+      }
+
       this.patchForm();
     });
     this.submit = false;
@@ -174,11 +188,12 @@ export class OwnerEstateEditorComponent  implements OnInit {
         this.estate.noOfRooms = 4;
       }
       this.roomNumbers = Array(this.estate.noOfRooms).fill(3).map((x,i)=>i);
+
       this.estate.rooms = [];
       this.roomNumbers.forEach( x=> {
         let newRoom = new RoomInfo();
-        newRoom.roomNo = x+1;
-        newRoom.surface = 10;
+        newRoom.roomNo = x + 1;
+        newRoom.surface = 0;
         this.estate.rooms.push(newRoom);
       });
       this.estateForm.patchValue({noOfRooms: this.estate.noOfRooms});
@@ -195,8 +210,8 @@ export class OwnerEstateEditorComponent  implements OnInit {
   }
 
   save() {
-    console.log(this.estateForm.errors);
     console.log(this.estateForm);
+    console.log(this.estate.rooms);
 
     if (this.estateForm.valid) {
       let recordModel = new EstateFull();
@@ -241,7 +256,7 @@ export class OwnerEstateEditorComponent  implements OnInit {
       recordModel.askingPriceForYear = this.estateForm.get('askingPriceForYear')?.value;
       recordModel.askingPriceForCustomPeriod = this.estateForm.get('askingPriceForCustomPeriod')?.value;
       recordModel.coordinates = new SimplePoint(this.centerLat, this.centerLng);
-
+      recordModel.rooms = this.estate.rooms;
       if (this.id > 0 ) {
         recordModel.id = this.id;
       }

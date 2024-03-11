@@ -1,23 +1,70 @@
-<p>room-editor works!</p>
 <div class="row">
   <div class="row">
-    <div class="col-lg-6">
+    <div class="col-lg-3">
       <div class="mb-3">
-        <label for="basicpill-namecard-input">Name on Card</label>
-        <input type="text" class="form-control" id="basicpill-namecard-input">
+        <label for="surface">Square Meters</label>
+        <input id="surface" name="surface" type="number" class="form-control" placeholder="Sq. Meters" [(ngModel)]="this.room.surface">
       </div>
     </div>
 
-    <div class="col-lg-6">
+    <div class="col-lg-3">
       <div class="mb-3">
-        <label>Credit Card Type</label>
-        <select class="form-select">
-          <option selected>Select Card Type</option>
-          <option value="AE">American Express</option>
-          <option value="VI">Visa</option>
-          <option value="MC">MasterCard</option>
-          <option value="DI">Discover</option>
-        </select>
+        <label>Single Beds</label>
+        <input id="noOfSingleBeds" name="noOfSingleBeds" type="number" class="form-control" placeholder="#Single Beds" [(ngModel)]="this.room.noOfSingleBeds">
+      </div>
+    </div>
+    <div class="col-lg-3">
+      <div class="mb-3">
+        <label>Double Beds</label>
+        <input id="noOfDoubleBeds" name="noOfDoubleBeds" type="number" class="form-control" placeholder="# Double Beds" [(ngModel)]="this.room.noOfDoubleBeds">
+      </div>
+    </div>
+    <div class="col-lg-3">
+      <div class="mb-3">
+        <label>Bunk Beds</label>
+        <input id="noOfBunkBeds" name="noOfDoubleBeds" type="number" class="form-control" placeholder="# Bunk Beds" [(ngModel)]="this.room.noOfBunkBeds">
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-3">
+      <div class="form-check mb-3">
+        <input class="form-check-input" type="checkbox" id="hasInSuiteBathroom" [(ngModel)]="this.room.hasInSuiteBathroom">
+        <label class="form-check-label" for="hasInSuiteBathroom">
+          In-Suite Bathroom
+        </label>
+      </div>
+      <div class="form-check mb-3">
+        <input class="form-check-input" type="checkbox" id="hasWifi"  [(ngModel)]="this.room.hasWifi">
+        <label class="form-check-label" for="hasWifi">
+          WIFI
+        </label>
+      </div>
+      <div class="form-check mb-3">
+        <input class="form-check-input" type="checkbox" id="hasBalcony"  [(ngModel)]="this.room.hasBalcony">
+        <label class="form-check-label" for="hasBalcony">
+          Balcony
+        </label>
+      </div>
+    </div>
+    <div class="col-lg-3">
+      <div class="form-check mb-3">
+        <input class="form-check-input" type="checkbox" id="hasCloset"  [(ngModel)]="this.room.hasCloset">
+        <label class="form-check-label" for="hasCloset">
+          Closet
+        </label>
+      </div>
+      <div class="form-check mb-3">
+        <input class="form-check-input" type="checkbox" id="hasKitchenette"  [(ngModel)]="this.room.hasKitchenette">
+        <label class="form-check-label" for="hasKitchenette">
+          Kitchenette
+        </label>
+      </div>
+      <div class="form-check mb-3">
+        <input class="form-check-input" type="checkbox" id="hasAirCondition"  [(ngModel)]="this.room.hasAirCondition">
+        <label class="form-check-label" for="hasAirCondition">
+          Air Condition
+        </label>
       </div>
     </div>
   </div>

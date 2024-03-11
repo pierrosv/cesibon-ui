@@ -256,7 +256,9 @@
                   <div  *ngIf="this.estate.estateType < 70">
                     <accordion [closeOthers]="true" class="accordion" [isAnimated]="true">
                       <accordion-group  heading="Room #{{room.roomNo}}" class="accordion-item" *ngFor="let room of this.estate.rooms">
-                        <app-room-editor>
+                        <app-room-editor
+                          [room]="room"
+                        >
 
                         </app-room-editor>
                       </accordion-group>

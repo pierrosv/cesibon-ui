@@ -60,6 +60,11 @@ import { EstateOwnerComponent } from './profile/estate-owner/estate-owner.compon
 import { CoreProfileComponent } from './profile/core-profile/core-profile.component';
 import {DropzoneModule} from "ngx-dropzone-wrapper";
 import {NgSelectModule} from "@ng-select/ng-select";
+import {NgStepperModule} from "angular-ng-stepper";
+import {CdkStepperModule} from "@angular/cdk/stepper";
+import { RoomEditorComponent } from './owner-estate-editor/room-editor/room-editor.component';
+import { HouseEditorComponent } from './owner-estate-editor/house-editor/house-editor.component';
+import {AccordionModule} from "ngx-bootstrap/accordion";
 
 @NgModule({
   declarations: [CalendarComponent, ChatComponent,
@@ -73,7 +78,7 @@ import {NgSelectModule} from "@ng-select/ng-select";
     CompanyListComponent,
     CompanyDetailComponent,
     OwnerEstateListComponent,
-    OwnerEstateEditorComponent, OwnerEstateViewerComponent, EstateOwnerComponent, CoreProfileComponent],
+    OwnerEstateEditorComponent, OwnerEstateViewerComponent, EstateOwnerComponent, CoreProfileComponent, RoomEditorComponent, HouseEditorComponent],
   imports: [
     CommonModule,
     FormsModule,
@@ -113,7 +118,10 @@ import {NgSelectModule} from "@ng-select/ng-select";
     LeafletDrawModule,
     NgxSliderModule,
     DropzoneModule,
-    NgSelectModule
+    NgSelectModule,
+    NgStepperModule,
+    CdkStepperModule,
+    AccordionModule
   ],
 })
 export class PagesModule { }

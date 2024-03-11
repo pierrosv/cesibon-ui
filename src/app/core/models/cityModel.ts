@@ -60,9 +60,7 @@ export class EstateFull {
   adminNotes: string;
   inRegionId: number;
   noOfRooms: number;
-  noOfInSuites: number;
   totalSquareMeters: number;
-  askingPrice: number;
   inRegionName: string;
   mainImage: string;
   coordinates: SimplePoint;
@@ -75,46 +73,108 @@ export class EstateFull {
   hasWifi: boolean;
   hasKitchen: boolean;
   hasKitchenEquipment: boolean;
-  hasKitchenette: boolean;
   hasHeat: boolean;
   hasWashingMachine: boolean;
   hasPool: boolean;
   hasBbq: boolean;
-  hasYard: boolean;
   hasGarden: boolean;
   hasView: boolean;
   hasHotWater: boolean;
   hasAirCondition: boolean;
+  rentForDay: boolean;
+  rentForMonth: boolean;
+  rentForWinterSeason: boolean;
+  rentForSummerSeason: boolean;
+  rentForYear: boolean;
+  rentForCustomPeriod: boolean;
+  askingPriceForDay: number;
+  askingPriceForMonth: number;
+  askingPriceForWinterSeason: number;
+  askingPriceForSummerSeason: number;
+  askingPriceForYear: number;
+  askingPriceForCustomPeriod: number;
+  rooms: RoomInfo[];
+  houses: HouseInfo[];
 }
+
+export class HouseInfo {
+  id: number;
+  hasLivingRoom: boolean;
+  hasDiningArea: boolean;
+  hasKitchen: boolean;
+  hasKitchenEquipment: boolean;
+  hasHeat: boolean;
+  hasWashingMachine: boolean;
+  hasHotWater: boolean;
+  hasAirCondition: boolean;
+
+  rooms: RoomInfo[];
+}
+
+export class RoomInfo {
+  id: number;
+  roomNo: number;
+  surface: number;
+  hasInSuiteBathroom: boolean;
+  hasBalcony: boolean;
+  hasCloset: boolean;
+  hasWifi: boolean;
+  hasKitchenette: boolean;
+  hasAirCondition: boolean;
+  noOfSingleBeds: number;
+  noOfDoubleBeds: number;
+  noOfBunBeds: number;
+}
+
 
 export class DataModel {
   id: number;
   name: string;
 }
-export const estateTypes: DataModel[]  = [
+
+export const bedTypes: DataModel[] = [
   {
     id: 10,
-    name: 'LineStaff',
-  },
-  {
-    id: 20,
-    name: 'Shared',
-  },
-  {
-    id: 30,
     name: 'Single',
   },
   {
-    id: 40,
+    id: 20,
+    name: 'Double',
+  },
+  {
+    id: 30,
+    name: 'Bank Bed',
+  }
+]
+
+export const estateTypes: DataModel[]  = [
+  {
+    id: 10,
     name: 'Studio',
   },
   {
+    id: 20,
+    name: 'One Bedroom',
+  },
+  {
+    id: 30,
+    name: 'Two Bedrooms',
+  },
+  {
+    id: 40,
+    name: 'Three Bedrooms',
+  },
+  {
     id: 50,
-    name: 'Floor',
+    name: 'Four Bedrooms',
   },
   {
     id: 60,
     name: 'Villa',
+  },
+  {
+    id: 70,
+    name: 'Complex',
   }
 ]
 

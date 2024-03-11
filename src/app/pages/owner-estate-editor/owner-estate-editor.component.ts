@@ -4,7 +4,7 @@ import {HttpClient} from "@angular/common/http";
 import {DropzoneConfigInterface} from "ngx-dropzone-wrapper";
 import {ActivatedRoute, Router} from "@angular/router";
 import {ParamsService} from "../../core/services/params.service";
-import {CityModel, EstateFull, estateTypes, rentalPeriodType, SimplePoint} from "../../core/models/cityModel";
+import {CityModel, EstateFull, estateTypes, rentalPeriodType, RoomInfo, SimplePoint} from "../../core/models/cityModel";
 import {EstateService} from "../../core/services/estate.service";
 
 import {DrawEvents, featureGroup, FeatureGroup, latLng, marker, tileLayer} from "leaflet";
@@ -23,8 +23,10 @@ export class OwnerEstateEditorComponent  implements OnInit {
   lng: number;
   cities: CityModel[];
   estate: EstateFull;
+  roomNumbers: number[];
   centerLat: number;
   centerLng: number;
+  selectedEstateType: number;
   protected readonly estateTypes = estateTypes;
   protected readonly rentalPeriodType = rentalPeriodType;
 
@@ -66,16 +68,25 @@ export class OwnerEstateEditorComponent  implements OnInit {
       toDate: ['', [Validators.required]],
       ownerNotes: [''],
       noOfRooms: [0],
-      noOfInSuites: [0],
       totalSquareMeters: [0, [Validators.required]],
-      askingPrice: [0, [Validators.required]],
+      rentForDay: [false],
+      rentForMonth: [false],
+      rentForWinterSeason: [false],
+      rentForSummerSeason: [false],
+      rentForYear: [false],
+      rentForCustomPeriod: [false],
+      askingPriceForDay: [0],
+      askingPriceForMonth: [0],
+      askingPriceForWinterSeason: [0],
+      askingPriceForSummerSeason: [0],
+      askingPriceForYear: [0],
+      askingPriceForCustomPeriod: [0],
       hasLivingRoom: [false],
       hasDiningArea: [false],
       hasParking: [false],
       hasWifi: [false],
       hasKitchen: [false],
       hasKitchenEquipment: [false],
-      hasKitchenette: [false],
       hasHeat: [false],
       hasWashingMachine: [false],
       hasPool: [false],
@@ -95,6 +106,7 @@ export class OwnerEstateEditorComponent  implements OnInit {
   }
 
   patchForm() {
+    this.selectedEstateType = this.estate.estateType;
     this.estateForm.patchValue({name: this.estate.name});
     this.estateForm.patchValue({estateType: this.estate.estateType});
     this.estateForm.patchValue({rentalPeriodType: this.estate.rentalPeriodType});
@@ -102,25 +114,76 @@ export class OwnerEstateEditorComponent  implements OnInit {
     this.estateForm.patchValue({toDate: this.estate.toDate});
     this.estateForm.patchValue({ownerNotes: this.estate.ownerNotes});
     this.estateForm.patchValue({noOfRooms: this.estate.noOfRooms});
-    this.estateForm.patchValue({noOfInSuites: this.estate.noOfInSuites});
     this.estateForm.patchValue({totalSquareMeters: this.estate.totalSquareMeters});
-    this.estateForm.patchValue({askingPrice: this.estate.askingPrice});
     this.estateForm.patchValue({hasLivingRoom: this.estate.hasLivingRoom});
     this.estateForm.patchValue({hasDiningArea: this.estate.hasDiningArea});
     this.estateForm.patchValue({hasParking: this.estate.hasParking});
     this.estateForm.patchValue({hasWifi: this.estate.hasWifi});
     this.estateForm.patchValue({hasKitchen: this.estate.hasKitchen});
     this.estateForm.patchValue({hasKitchenEquipment: this.estate.hasKitchenEquipment});
-    this.estateForm.patchValue({hasKitchenette: this.estate.hasKitchenette});
     this.estateForm.patchValue({hasHeat: this.estate.hasHeat});
     this.estateForm.patchValue({hasWashingMachine: this.estate.hasWashingMachine});
     this.estateForm.patchValue({hasPool: this.estate.hasPool});
     this.estateForm.patchValue({hasBbq: this.estate.hasBbq});
-    this.estateForm.patchValue({hasYard: this.estate.hasYard});
     this.estateForm.patchValue({hasGarden: this.estate.hasGarden});
     this.estateForm.patchValue({hasView: this.estate.hasView});
     this.estateForm.patchValue({hasHotWater: this.estate.hasHotWater});
     this.estateForm.patchValue({hasAirCondition: this.estate.hasAirCondition});
+    this.estateForm.patchValue({rentForDay: this.estate.rentForDay});
+    this.estateForm.patchValue({rentForMonth: this.estate.rentForMonth});
+    this.estateForm.patchValue({rentForWinterSeason: this.estate.rentForWinterSeason});
+    this.estateForm.patchValue({rentForSummerSeason: this.estate.rentForSummerSeason});
+    this.estateForm.patchValue({rentForYear: this.estate.rentForYear});
+    this.estateForm.patchValue({rentForCustomPeriod: this.estate.rentForCustomPeriod});
+    this.estateForm.patchValue({askingPriceForDay: this.estate.askingPriceForDay});
+    this.estateForm.patchValue({askingPriceForMonth: this.estate.askingPriceForMonth});
+    this.estateForm.patchValue({askingPriceForWinterSeason: this.estate.askingPriceForWinterSeason});
+    this.estateForm.patchValue({askingPriceForSummerSeason: this.estate.askingPriceForSummerSeason});
+    this.estateForm.patchValue({askingPriceForYear: this.estate.askingPriceForYear});
+    this.estateForm.patchValue({askingPriceForCustomPeriod: this.estate.askingPriceForCustomPeriod});
+    this.estateForm.get('rentForDay').valueChanges.subscribe(() => {
+      this.estate.rentForDay = this.estateForm.controls['rentForDay'].value;
+    });
+    this.estateForm.get('rentForMonth').valueChanges.subscribe(() => {
+      this.estate.rentForMonth = this.estateForm.controls['rentForMonth'].value;
+    });
+    this.estateForm.get('rentForWinterSeason').valueChanges.subscribe(() => {
+      this.estate.rentForWinterSeason = this.estateForm.controls['rentForWinterSeason'].value;
+    });
+    this.estateForm.get('rentForSummerSeason').valueChanges.subscribe(() => {
+      this.estate.rentForSummerSeason = this.estateForm.controls['rentForSummerSeason'].value;
+    });
+    this.estateForm.get('rentForYear').valueChanges.subscribe(() => {
+      this.estate.rentForYear = this.estateForm.controls['rentForYear'].value;
+    });
+    this.estateForm.get('rentForCustomPeriod').valueChanges.subscribe(() => {
+      this.estate.rentForCustomPeriod = this.estateForm.controls['rentForCustomPeriod'].value;
+    });
+
+    this.estateForm.get('estateType').valueChanges.subscribe(() => {
+      this.selectedEstateType = this.estateForm.controls['estateType'].value;
+      if (this.selectedEstateType == 10) {
+        this.estate.noOfRooms = 1;
+      } else if (this.selectedEstateType == 20) {
+        this.estate.noOfRooms = 1;
+      } else if (this.selectedEstateType == 30) {
+        this.estate.noOfRooms = 2;
+      } else if (this.selectedEstateType == 40) {
+        this.estate.noOfRooms = 3;
+      } else if (this.selectedEstateType == 50) {
+        this.estate.noOfRooms = 4;
+      }
+      this.roomNumbers = Array(this.estate.noOfRooms).fill(3).map((x,i)=>i);
+      this.estate.rooms = [];
+      this.roomNumbers.forEach( x=> {
+        let newRoom = new RoomInfo();
+        newRoom.roomNo = x+1;
+        newRoom.surface = 10;
+        this.estate.rooms.push(newRoom);
+      });
+      this.estateForm.patchValue({noOfRooms: this.estate.noOfRooms});
+    });
+
     this.center = latLng(this.estate.cityCenter.latitude, this.estate.cityCenter.longitude);
     this.markerPoint = latLng(this.estate.coordinates.latitude, this.estate.coordinates.longitude);
     this.regionArea = marker(this.markerPoint);
@@ -132,6 +195,9 @@ export class OwnerEstateEditorComponent  implements OnInit {
   }
 
   save() {
+    console.log(this.estateForm.errors);
+    console.log(this.estateForm);
+
     if (this.estateForm.valid) {
       let recordModel = new EstateFull();
       recordModel.id = -1;
@@ -144,16 +210,13 @@ export class OwnerEstateEditorComponent  implements OnInit {
       recordModel.toDate = this.estateForm.get('toDate')?.value;
       recordModel.ownerNotes = this.estateForm.get('ownerNotes')?.value;
       recordModel.noOfRooms = this.estateForm.get('noOfRooms')?.value;
-      recordModel.noOfInSuites = this.estateForm.get('noOfInSuites')?.value;
       recordModel.totalSquareMeters = this.estateForm.get('totalSquareMeters')?.value;
-      recordModel.askingPrice = this.estateForm.get('askingPrice')?.value;
       recordModel.hasLivingRoom = this.estateForm.get('hasLivingRoom')?.value;
       recordModel.hasDiningArea = this.estateForm.get('hasDiningArea')?.value;
       recordModel.hasParking = this.estateForm.get('hasParking')?.value;
       recordModel.hasWifi = this.estateForm.get('hasWifi')?.value;
       recordModel.hasKitchen = this.estateForm.get('hasKitchen')?.value;
       recordModel.hasKitchenEquipment = this.estateForm.get('hasKitchenEquipment')?.value;
-      recordModel.hasKitchenette = this.estateForm.get('hasKitchenette')?.value;
       recordModel.hasHeat = this.estateForm.get('hasHeat')?.value;
       recordModel.hasWashingMachine = this.estateForm.get('hasWashingMachine')?.value;
       recordModel.hasPool = this.estateForm.get('hasPool')?.value;
@@ -161,11 +224,22 @@ export class OwnerEstateEditorComponent  implements OnInit {
         recordModel.hasPool = false;
       }
       recordModel.hasBbq = this.estateForm.get('hasBbq')?.value;
-      recordModel.hasYard = this.estateForm.get('hasYard')?.value;
       recordModel.hasGarden = this.estateForm.get('hasGarden')?.value;
       recordModel.hasView = this.estateForm.get('hasView')?.value;
       recordModel.hasHotWater = this.estateForm.get('hasHotWater')?.value;
       recordModel.hasAirCondition = this.estateForm.get('hasAirCondition')?.value;
+      recordModel.rentForDay = this.estateForm.get('rentForDay')?.value;
+      recordModel.rentForMonth = this.estateForm.get('rentForMonth')?.value;
+      recordModel.rentForWinterSeason = this.estateForm.get('rentForWinterSeason')?.value;
+      recordModel.rentForSummerSeason = this.estateForm.get('rentForSummerSeason')?.value;
+      recordModel.rentForYear = this.estateForm.get('rentForYear')?.value;
+      recordModel.rentForCustomPeriod = this.estateForm.get('rentForCustomPeriod')?.value;
+      recordModel.askingPriceForDay = this.estateForm.get('askingPriceForDay')?.value;
+      recordModel.askingPriceForMonth = this.estateForm.get('askingPriceForMonth')?.value;
+      recordModel.askingPriceForWinterSeason = this.estateForm.get('askingPriceForWinterSeason')?.value;
+      recordModel.askingPriceForSummerSeason = this.estateForm.get('askingPriceForSummerSeason')?.value;
+      recordModel.askingPriceForYear = this.estateForm.get('askingPriceForYear')?.value;
+      recordModel.askingPriceForCustomPeriod = this.estateForm.get('askingPriceForCustomPeriod')?.value;
       recordModel.coordinates = new SimplePoint(this.centerLat, this.centerLng);
 
       if (this.id > 0 ) {
@@ -196,7 +270,6 @@ export class OwnerEstateEditorComponent  implements OnInit {
       });
     }
   }
-
 
   // validSubmit() {
   //   this.submit = true;

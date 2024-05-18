@@ -51,8 +51,6 @@ export class EstateFull {
   estateTypeName: string;
   estateStatus: number;
   estateStatusName: string;
-  rentalPeriodType: number;
-  rentalPeriodTypeName: string;
   fromDate: Date;
   toDate: Date;
   name: string;
@@ -60,6 +58,7 @@ export class EstateFull {
   adminNotes: string;
   inRegionId: number;
   noOfRooms: number;
+  noOfHouses: number;
   totalSquareMeters: number;
   inRegionName: string;
   mainImage: string;
@@ -99,6 +98,8 @@ export class EstateFull {
 
 export class HouseInfo {
   id: number;
+  houseNo: number;
+  noOfRooms: number;
   hasLivingRoom: boolean;
   hasDiningArea: boolean;
   hasKitchen: boolean;

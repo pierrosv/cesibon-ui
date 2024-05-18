@@ -1,4 +1,4 @@
-<div class="container-fluid" *ngIf="estate">
+<div class="container-fluid" *ngIf="estate" xmlns="http://www.w3.org/1999/html">
 
   <!-- start page title -->
   <app-page-title title="{{action}} Estate" [breadcrumbItems]="breadCrumbItems"></app-page-title>
@@ -75,7 +75,9 @@
                       </div>
                     </div>
                   </div>
+                  <br/>
                   <div class="row">
+                    <h5>Desirable Rental Periods</h5>
                     <div class="col-sm-6">
                       <div class="form-check mb-3">
                         <input class="form-check-input" type="checkbox" id="rentForDay" formControlName="rentForDay">
@@ -129,6 +131,7 @@
                       </div>
                     </div>
                   </div>
+                  <br/>
                   <ul class="list-inline wizard d-flex justify-content-end mb-0">
 <!--                    <li class="previous list-inline-item" aria-disabled="true"><button class="btn btn-primary" cdkStepperPrevious>Previous</button></li>-->
                     <li class="next list-inline-item" aria-disabled="false"><button class="btn btn-primary" cdkStepperNext type="button">Next</button></li>
@@ -237,8 +240,8 @@
                         </div>
                       </div>
                     </div>
-
                   </div>
+                  <br/>
                   <ul class="list-inline wizard d-flex justify-content-end mb-0">
                     <li class="previous list-inline-item" aria-disabled="true"><button class="btn btn-primary" cdkStepperPrevious type="button">Previous</button></li>
                     <li class="next list-inline-item" aria-disabled="false"><button class="btn btn-primary" cdkStepperNext type="button">Next</button></li>
@@ -249,11 +252,11 @@
             <cdk-step  [optional]="false">
               <ng-template cdkStepLabel>
                 <span class="number">3.</span>
-                <span>Room Information</span>
+                <span>{{unitType}} Information</span>
               </ng-template>
               @if(cdkStepper.selectedIndex === 2) {
                 <section>
-                  <div  *ngIf="this.estate.estateType < 70">
+                  <div  *ngIf="this.selectedEstateType < 70">
                     <accordion [closeOthers]="true" class="accordion" [isAnimated]="true">
                       <accordion-group  heading="Room #{{room.roomNo}}" class="accordion-item" *ngFor="let room of this.estate.rooms">
                         <app-room-editor
@@ -264,12 +267,18 @@
                       </accordion-group>
                     </accordion>
                   </div>
-                  <div  *ngIf="this.estate.estateType == 70">
+                  <div  *ngIf="this.selectedEstateType == 70">
+                    <accordion [closeOthers]="true" class="accordion" [isAnimated]="true">
+                      <accordion-group  heading="House #{{house.houseNo}}" class="accordion-item" *ngFor="let house of this.estate.houses">
+                        <app-house-editor
+                          [house]="house"
+                        >
 
+                        </app-house-editor>
+                      </accordion-group>
+                    </accordion>
                   </div>
-
-
-
+                  <br/>
                   <ul class="list-inline wizard d-flex justify-content-end mb-0">
                     <li class="previous list-inline-item" aria-disabled="true"><button class="btn btn-primary" cdkStepperPrevious type="button">Previous</button></li>
                     <li class="next list-inline-item" aria-disabled="false"><button class="btn btn-primary" cdkStepperNext type="button">Next</button></li>
@@ -321,7 +330,8 @@
                         </li>
                       }
                     </ul>}
-                  <!-- end dropzon-preview -->
+
+                  <br/>
                   <ul class="list-inline wizard d-flex justify-content-end mb-0">
                     <li class="previous list-inline-item" aria-disabled="true"><button class="btn btn-primary" cdkStepperPrevious type="button">Previous</button></li>
                     <li class="next list-inline-item" aria-disabled="false"><button class="btn btn-primary" cdkStepperNext type="button">Next</button></li>
@@ -360,7 +370,7 @@
                     </div>
                   </div>
                 }
-
+                <br/>
                 <ul class="list-inline wizard d-flex justify-content-end mb-0">
                   <li class="previous list-inline-item" aria-disabled="true"><button class="btn btn-primary" cdkStepperPrevious type="button">Previous</button></li>
                   <li class="next list-inline-item" aria-disabled="false"><button class="btn btn-primary" cdkStepperNext type="button">Next</button></li>
@@ -449,7 +459,7 @@
                       </div>
                     </div>
                   </div>
-
+                  <br/>
                   <ul class="list-inline wizard d-flex justify-content-end mb-0">
                     <li class="previous list-inline-item" aria-disabled="true"><button class="btn btn-primary" cdkStepperPrevious type="button">Previous</button></li>
 <!--                    <li class="next list-inline-item" aria-disabled="false"><button class="btn btn-primary" cdkStepperNext>Next</button></li>-->

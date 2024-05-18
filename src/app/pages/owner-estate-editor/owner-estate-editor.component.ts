@@ -4,7 +4,7 @@ import {HttpClient} from "@angular/common/http";
 import {DropzoneConfigInterface} from "ngx-dropzone-wrapper";
 import {ActivatedRoute, Router} from "@angular/router";
 import {ParamsService} from "../../core/services/params.service";
-import {CityModel, EstateFull, estateTypes, rentalPeriodType, RoomInfo, SimplePoint} from "../../core/models/cityModel";
+import {CityModel, EstateFull, estateTypes, HouseInfo, rentalPeriodType, RoomInfo, SimplePoint} from "../../core/models/cityModel";
 import {EstateService} from "../../core/services/estate.service";
 
 import {DrawEvents, featureGroup, FeatureGroup, latLng, marker, tileLayer} from "leaflet";
@@ -19,11 +19,13 @@ import {AuthenticationService} from "../../core/services/auth.service";
 export class OwnerEstateEditorComponent  implements OnInit {
   id: number;
   action: string;
+  unitType = 'Room';
   lat: number;
   lng: number;
   cities: CityModel[];
   estate: EstateFull;
   roomNumbers: number[];
+  houseNumbers: number[];
   centerLat: number;
   centerLng: number;
   selectedEstateType: number;
@@ -63,12 +65,12 @@ export class OwnerEstateEditorComponent  implements OnInit {
     this.estateForm = this.formBuilder.group({
       name: ['', [Validators.required]],
       estateType: [0, [Validators.required]],
-      rentalPeriodType: [0, [Validators.required]],
-      fromDate: ['', [Validators.required]],
-      toDate: ['', [Validators.required]],
+      fromDate: [''],
+      toDate: [''],
       ownerNotes: [''],
       noOfRooms: [0],
-      totalSquareMeters: [0, [Validators.required]],
+      noOfHouses: [0],
+      totalSquareMeters: [0],
       rentForDay: [false],
       rentForMonth: [false],
       rentForWinterSeason: [false],
@@ -100,6 +102,11 @@ export class OwnerEstateEditorComponent  implements OnInit {
 
     this.estateSrv.getEstateById(this.id).subscribe(x=> {
       this.estate = x;
+      this.selectedEstateType = this.estate.estateType;
+      if (this.estate.estateType == 70) {
+        this.unitType = 'House';
+      }
+
       if (this.estate.noOfRooms >0 && (!this.estate.rooms || this.estate.rooms.length == 0)) {
         this.roomNumbers = Array(this.estate.noOfRooms).fill(3).map((x,i)=>i);
         this.estate.rooms = [];
@@ -113,6 +120,17 @@ export class OwnerEstateEditorComponent  implements OnInit {
           this.estate.rooms.push(newRoom);
         });
       }
+console.log(this.estate.houses);
+      if (this.estate.noOfHouses >0 && (!this.estate.houses || this.estate.houses.length == 0)) {
+        this.houseNumbers = Array(this.estate.noOfHouses).fill(3).map((x,i)=>i);
+        this.estate.houses = [];
+        this.houseNumbers.forEach(x => {
+          let newHouse = new HouseInfo();
+          newHouse.houseNo = x + 1;
+          newHouse.noOfRooms = 0;
+          this.estate.houses.push(newHouse);
+        });
+      }
 
       this.patchForm();
     });
@@ -123,11 +141,11 @@ export class OwnerEstateEditorComponent  implements OnInit {
     this.selectedEstateType = this.estate.estateType;
     this.estateForm.patchValue({name: this.estate.name});
     this.estateForm.patchValue({estateType: this.estate.estateType});
-    this.estateForm.patchValue({rentalPeriodType: this.estate.rentalPeriodType});
     this.estateForm.patchValue({fromDate: this.estate.fromDate});
     this.estateForm.patchValue({toDate: this.estate.toDate});
     this.estateForm.patchValue({ownerNotes: this.estate.ownerNotes});
     this.estateForm.patchValue({noOfRooms: this.estate.noOfRooms});
+    this.estateForm.patchValue({noOfHouses: this.estate.noOfHouses});
     this.estateForm.patchValue({totalSquareMeters: this.estate.totalSquareMeters});
     this.estateForm.patchValue({hasLivingRoom: this.estate.hasLivingRoom});
     this.estateForm.patchValue({hasDiningArea: this.estate.hasDiningArea});
@@ -176,6 +194,7 @@ export class OwnerEstateEditorComponent  implements OnInit {
 
     this.estateForm.get('estateType').valueChanges.subscribe(() => {
       this.selectedEstateType = this.estateForm.controls['estateType'].value;
+      this.unitType = 'Room';
       if (this.selectedEstateType == 10) {
         this.estate.noOfRooms = 1;
       } else if (this.selectedEstateType == 20) {
@@ -187,6 +206,11 @@ export class OwnerEstateEditorComponent  implements OnInit {
       } else if (this.selectedEstateType == 50) {
         this.estate.noOfRooms = 4;
       }
+      else if (this.selectedEstateType == 70) {
+        this.estate.noOfRooms = 0;
+        this.unitType = 'House';
+      }
+
       this.roomNumbers = Array(this.estate.noOfRooms).fill(3).map((x,i)=>i);
 
       this.estate.rooms = [];
@@ -197,6 +221,32 @@ export class OwnerEstateEditorComponent  implements OnInit {
         this.estate.rooms.push(newRoom);
       });
       this.estateForm.patchValue({noOfRooms: this.estate.noOfRooms});
+    });
+
+    this.estateForm.get('noOfRooms').valueChanges.subscribe(() => {
+      this.estate.noOfRooms = this.estateForm.controls['noOfRooms'].value;
+      this.roomNumbers = Array(this.estate.noOfRooms).fill(8).map((x,i)=>i);
+      console.log(this.roomNumbers);
+      this.estate.rooms = [];
+      this.roomNumbers.forEach( x=> {
+        let newRoom = new RoomInfo();
+        newRoom.roomNo = x + 1;
+        newRoom.surface = 0;
+        this.estate.rooms.push(newRoom);
+      });
+    });
+
+    this.estateForm.get('noOfHouses').valueChanges.subscribe(() => {
+      this.estate.noOfHouses = this.estateForm.controls['noOfHouses'].value;
+      console.log(this.estate.noOfHouses);
+      this.houseNumbers = Array(this.estate.noOfHouses).fill(8).map((x,i)=>i);
+      this.estate.houses = [];
+      this.houseNumbers.forEach( x=> {
+        let newHouse = new HouseInfo();
+        newHouse.houseNo = x + 1;
+        this.estate.houses.push(newHouse);
+      });
+      console.log(this.estate.houses);
     });
 
     this.center = latLng(this.estate.cityCenter.latitude, this.estate.cityCenter.longitude);
@@ -212,15 +262,16 @@ export class OwnerEstateEditorComponent  implements OnInit {
   save() {
     console.log(this.estateForm);
     console.log(this.estate.rooms);
-
+    console.log('Will Update');
+    console.log(this.estateForm.errors);
     if (this.estateForm.valid) {
+      console.log('Will Update is Valid');
       let recordModel = new EstateFull();
       recordModel.id = -1;
       recordModel.estateOwnerId = this.authSrv.getCurrentUserProfile.id;
       console.log(this.authSrv.getCurrentUserProfile.id);
       recordModel.name = this.estateForm.get('name')?.value;
       recordModel.estateType = +this.estateForm.get('estateType')?.value;
-      recordModel.rentalPeriodType = +this.estateForm.get('rentalPeriodType')?.value;
       recordModel.fromDate = this.estateForm.get('fromDate')?.value;
       recordModel.toDate = this.estateForm.get('toDate')?.value;
       recordModel.ownerNotes = this.estateForm.get('ownerNotes')?.value;
@@ -257,6 +308,7 @@ export class OwnerEstateEditorComponent  implements OnInit {
       recordModel.askingPriceForCustomPeriod = this.estateForm.get('askingPriceForCustomPeriod')?.value;
       recordModel.coordinates = new SimplePoint(this.centerLat, this.centerLng);
       recordModel.rooms = this.estate.rooms;
+      recordModel.houses = this.estate.houses;
       if (this.id > 0 ) {
         recordModel.id = this.id;
       }

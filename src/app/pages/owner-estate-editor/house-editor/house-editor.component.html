@@ -1,1 +1,77 @@
-<p>house-editor works!</p>
+<div class="row">
+  <div class="row">
+    <div class="col-lg-3">
+      <div class="mb-3">
+        <label for="rooms">No of Rooms</label>
+        <input id="rooms" name="noOfRooms" type="number" class="form-control" placeholder="noOfRooms" [(ngModel)]="this.house.noOfRooms" (ngModelChange)="changedRooms()">
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-3">
+      <div class="form-check mb-3">
+        <input class="form-check-input" type="checkbox" id="hasLivingRoom" [(ngModel)]="this.house.hasLivingRoom">
+        <label class="form-check-label" for="hasLivingRoom">
+          Living Room
+        </label>
+      </div>
+      <div class="form-check mb-3">
+        <input class="form-check-input" type="checkbox" id="hasDiningArea"  [(ngModel)]="this.house.hasDiningArea">
+        <label class="form-check-label" for="hasDiningArea">
+          Dining Area
+        </label>
+      </div>
+      <div class="form-check mb-3">
+        <input class="form-check-input" type="checkbox" id="hasKitchen"  [(ngModel)]="this.house.hasKitchen">
+        <label class="form-check-label" for="hasKitchen">
+          Kitchen
+        </label>
+      </div>
+      <div class="form-check mb-3">
+        <input class="form-check-input" type="checkbox" id="hasWashingMachine"  [(ngModel)]="this.house.hasWashingMachine">
+        <label class="form-check-label" for="hasWashingMachine">
+          Washing Machine
+        </label>
+      </div>
+    </div>
+    <div class="col-lg-3">
+      <div class="form-check mb-3">
+        <input class="form-check-input" type="checkbox" id="hasKitchenEquipment"  [(ngModel)]="this.house.hasKitchenEquipment">
+        <label class="form-check-label" for="hasKitchenEquipment">
+          Kitchen Equipment
+        </label>
+      </div>
+      <div class="form-check mb-3">
+        <input class="form-check-input" type="checkbox" id="hasHeat"  [(ngModel)]="this.house.hasHeat">
+        <label class="form-check-label" for="hasHeat">
+          Heat
+        </label>
+      </div>
+      <div class="form-check mb-3">
+        <input class="form-check-input" type="checkbox" id="hasAirCondition"  [(ngModel)]="this.house.hasAirCondition">
+        <label class="form-check-label" for="hasAirCondition">
+          Air Condition
+        </label>
+      </div>
+      <div class="form-check mb-3">
+        <input class="form-check-input" type="checkbox" id="hasHotWater"  [(ngModel)]="this.house.hasHotWater">
+        <label class="form-check-label" for="hasHotWater">
+          Hot Water
+        </label>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <accordion [closeOthers]="true" class="accordion" [isAnimated]="true">
+      <accordion-group  heading="Room #{{room.roomNo}}" class="accordion-item" *ngFor="let room of this.house.rooms">
+        <app-room-editor
+          [room]="room"
+        >
+
+        </app-room-editor>
+      </accordion-group>
+    </accordion>
+  </div>
+
+</div>

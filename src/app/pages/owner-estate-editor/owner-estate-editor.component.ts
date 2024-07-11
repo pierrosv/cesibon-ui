@@ -1,10 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {UntypedFormBuilder, UntypedFormGroup, Validators} from "@angular/forms";
-import {HttpClient} from "@angular/common/http";
+import {HttpEventType} from "@angular/common/http";
 import {DropzoneConfigInterface} from "ngx-dropzone-wrapper";
 import {ActivatedRoute, Router} from "@angular/router";
-import {ParamsService} from "../../core/services/params.service";
-import {CityModel, EstateFull, estateTypes, HouseInfo, rentalPeriodType, RoomInfo, SimplePoint} from "../../core/models/cityModel";
+import {CityModel, EstateFull, EstatePhoto, estateTypes, HouseInfo, rentalPeriodType, RoomInfo, SimplePoint} from "../../core/models/cityModel";
 import {EstateService} from "../../core/services/estate.service";
 
 import {DrawEvents, featureGroup, FeatureGroup, latLng, marker, tileLayer} from "leaflet";
@@ -23,6 +22,7 @@ export class OwnerEstateEditorComponent  implements OnInit {
   lat: number;
   lng: number;
   cities: CityModel[];
+  photos: EstatePhoto[];
   estate: EstateFull;
   roomNumbers: number[];
   houseNumbers: number[];
@@ -102,6 +102,7 @@ export class OwnerEstateEditorComponent  implements OnInit {
 
     this.estateSrv.getEstateById(this.id).subscribe(x=> {
       this.estate = x;
+      console.log(this.estate);
       this.selectedEstateType = this.estate.estateType;
       if (this.estate.estateType == 70) {
         this.unitType = 'House';
@@ -120,7 +121,7 @@ export class OwnerEstateEditorComponent  implements OnInit {
           this.estate.rooms.push(newRoom);
         });
       }
-console.log(this.estate.houses);
+      // console.log(this.estate.houses);
       if (this.estate.noOfHouses >0 && (!this.estate.houses || this.estate.houses.length == 0)) {
         this.houseNumbers = Array(this.estate.noOfHouses).fill(3).map((x,i)=>i);
         this.estate.houses = [];
@@ -132,6 +133,10 @@ console.log(this.estate.houses);
         });
       }
 
+      this.estateSrv.getEstatePhotos(this.id).subscribe( x=> {
+        this.photos = x;
+        console.log(this.photos);
+      });
       this.patchForm();
     });
     this.submit = false;
@@ -432,5 +437,57 @@ console.log(this.estate.houses);
       this.regionArea = null;
     }
   }
+
+  uploadPhotoCollection(files: File[]) {
+    console.log(this.estate.id);
+    this.estateSrv.uploadPhotoCollection(files, this.estate.id).subscribe(event => {
+      console.log('Event:' + event.type + '  Event:' + event);
+      console.log(event);
+      if (event.type === HttpEventType.UploadProgress) {
+
+      } else if (event.type === HttpEventType.Response) {
+        if (event.status === 200) {
+          console.log('SUCCESS');
+          alert('Images successfully uploaded !');
+          // this.uploadedFiles = files;
+          this.estateSrv.getEstatePhotos(this.id).subscribe( x=> {
+            this.photos = x;
+            console.log(this.photos);
+          });
+        }
+      }
+    });
+  }
+
+  uploadAllPhotos() {
+    console.log(this.estate.id);
+    this.estateSrv.uploadPhotoCollection(this.uploadedFiles, this.estate.id).subscribe(event => {
+      if (event.type === HttpEventType.UploadProgress) {
+      } else if (event.type === HttpEventType.Response) {
+        if (event.status === 200) {
+          alert('Images successfully uploaded');
+        }
+      }
+    });
+  }
+
+  setAsMainPhoto(photoId: number) {
+    this.estateSrv.setEstateMainPhoto(photoId).subscribe( x=> {
+      this.estateSrv.getEstatePhotos(this.id).subscribe( x=> {
+        this.photos = x;
+        console.log(this.photos);
+      });
+    });
+  }
+
+  removePhoto(photoId: number) {
+    this.estateSrv.deleteEstatePhoto(photoId).subscribe( x=> {
+      this.estateSrv.getEstatePhotos(this.id).subscribe( x=> {
+        this.photos = x;
+        console.log(this.photos);
+      });
+    });
+  }
+
 }
 

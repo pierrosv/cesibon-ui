@@ -65,6 +65,7 @@ import {CdkStepperModule} from "@angular/cdk/stepper";
 import { RoomEditorComponent } from './owner-estate-editor/room-editor/room-editor.component';
 import { HouseEditorComponent } from './owner-estate-editor/house-editor/house-editor.component';
 import {AccordionModule} from "ngx-bootstrap/accordion";
+import {BsDatepickerModule} from "ngx-bootstrap/datepicker";
 
 @NgModule({
   declarations: [CalendarComponent, ChatComponent,
@@ -121,7 +122,8 @@ import {AccordionModule} from "ngx-bootstrap/accordion";
     NgSelectModule,
     NgStepperModule,
     CdkStepperModule,
-    AccordionModule
+    AccordionModule,
+    BsDatepickerModule
   ],
 })
 export class PagesModule { }

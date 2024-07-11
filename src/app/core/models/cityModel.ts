@@ -26,6 +26,14 @@ export class SimplePoint {
   constructor(public latitude: number, public longitude: number) {}
 }
 
+export class EstatePhoto {
+  id: number;
+  originalFilename:string;7
+  inEstateId: number;
+  mainPhoto: boolean;
+  photoLocation: string;
+}
+
 export class EstateSimple {
   id: number;
   estateType: number;
@@ -206,3 +214,4 @@ export const rentalPeriodType: DataModel[] = [
     name: 'Year',
   }
 ]
+

@@ -41,6 +41,20 @@
                   </div>
                   <div class="row">
                     <div class="col-lg-6">
+                      <div class="mb-3">
+                        <label for="propertyIdentificationNo">Property Identification Number</label>
+                        <input id="propertyIdentificationNo" name="propertyIdentificationNo" type="text" placeholder="Property Identification No" class="form-control" formControlName="propertyIdentificationNo" [ngClass]="{'is-invalid': submit && form.propertyIdentificationNo.errors}">
+                        @if(submit && form.propertyIdentificationNo.errors) {
+                          <div class="invalid-feedback">
+                            @if(form.propertyIdentificationNo.errors.required) {
+                              <span>PIN is required.</span>
+                            }
+                          </div>}
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-lg-6">
                       <div class="mb-3" *ngIf="selectedEstateType != 70">
                         <label for="totalSquareMeters">Total Square Meters</label>
                         <input id="totalSquareMeters" name="totalSquareMeters" type="number" class="form-control" placeholder="Sq. Meters" formControlName="totalSquareMeters" [ngClass]="{'is-invalid': submit &&

@@ -64,6 +64,7 @@ export class OwnerEstateEditorComponent  implements OnInit {
 
     this.estateForm = this.formBuilder.group({
       name: ['', [Validators.required]],
+      propertyIdentificationNo: [''],
       estateType: [0, [Validators.required]],
       fromDate: [''],
       toDate: [''],
@@ -145,6 +146,7 @@ export class OwnerEstateEditorComponent  implements OnInit {
   patchForm() {
     this.selectedEstateType = this.estate.estateType;
     this.estateForm.patchValue({name: this.estate.name});
+    this.estateForm.patchValue({propertyIdentificationNo: this.estate.propertyIdentificationNo});
     this.estateForm.patchValue({estateType: this.estate.estateType});
     this.estateForm.patchValue({fromDate: this.estate.fromDate});
     this.estateForm.patchValue({toDate: this.estate.toDate});
@@ -276,6 +278,7 @@ export class OwnerEstateEditorComponent  implements OnInit {
       recordModel.estateOwnerId = this.authSrv.getCurrentUserProfile.id;
       console.log(this.authSrv.getCurrentUserProfile.id);
       recordModel.name = this.estateForm.get('name')?.value;
+      recordModel.propertyIdentificationNo = this.estateForm.get('propertyIdentificationNo')?.value;
       recordModel.estateType = +this.estateForm.get('estateType')?.value;
       recordModel.fromDate = this.estateForm.get('fromDate')?.value;
       recordModel.toDate = this.estateForm.get('toDate')?.value;

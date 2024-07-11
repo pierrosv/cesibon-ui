@@ -21,9 +21,10 @@ export class EstateService {
 
   saveEstate(estate: EstateFull):Observable<EstateFull> {
     const fullUrl = `${environment.apiUrl}/${environment.estateUrl}/`;
+    console.log(fullUrl);
+    console.log(estate);
     if (estate.id <= 0) {
-      console.log(fullUrl);
-      console.log(estate);
+
       return this.http.post<EstateFull>(fullUrl, estate);
     }
     return this.http.put<EstateFull>(fullUrl, estate);

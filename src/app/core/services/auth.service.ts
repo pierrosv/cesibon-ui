@@ -3,11 +3,8 @@ import { Injectable } from '@angular/core';
 import {BehaviorSubject, from, map, Observable, throwError} from 'rxjs';
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {Router} from "@angular/router";
-import {Store} from "@ngrx/store";
 import {environment} from "../../../environments/environment";
 import {catchError} from "rxjs/operators";
-import {RegionModel} from "../models/cityModel";
-
 
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
@@ -118,6 +115,11 @@ export class AuthenticationService {
     const fullUrl = `${environment.apiUrl}/${environment.identityUrl}/register-estate-owner`;
     return this.http.post<number>(fullUrl, owner);
   }
+
+  registerCompany(company: CompanyRegistration):Observable<number> {
+    const fullUrl = `${environment.apiUrl}/${environment.identityUrl}/register-company`;
+    return this.http.post<number>(fullUrl, company);
+  }
 }
 
 export interface ApplicationUser {
@@ -139,6 +141,15 @@ export class EstateOwnerUser {
   lastName: string;
   firstName: string;
   password: string;
+}
+
+export class CompanyRegistration {
+  personEmail: string;
+  lastName: string;
+  firstName: string;
+  password: string;
+  companyName: string;
+  companyEmail: string;
 }
 
 export interface CesibonLoginInformation {

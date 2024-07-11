@@ -71,6 +71,7 @@ export class EstateFull {
   fromDate: Date;
   toDate: Date;
   name: string;
+  propertyIdentificationNo: string;
   ownerNotes: string;
   adminNotes: string;
   inRegionId: number;

@@ -65,6 +65,9 @@
       "LOGOUT": "Logout"
     }
   },
+  "ADMIN": {
+    "CONTACT_US" : "Contact Us"
+  },
   "MENUITEMS": {
     "MENU": {
       "TEXT": "Menu"

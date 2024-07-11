@@ -11,6 +11,7 @@ import {OwnerEstateViewerComponent} from "./owner-estate-viewer/owner-estate-vie
 import {CoreDashboardComponent} from "./dashboards/core-dashboard/core-dashboard.component";
 import {EstateOwnerComponent} from "./profile/estate-owner/estate-owner.component";
 import {CoreProfileComponent} from "./profile/core-profile/core-profile.component";
+import {ContactUsListComponent} from "./contact-us-list/contact-us-list.component";
 
 const routes: Routes = [
   // { path: '', redirectTo: 'dashboard' },
@@ -25,6 +26,7 @@ const routes: Routes = [
   { path: 'profile/estate-owner', component: EstateOwnerComponent },
   { path: 'dashboard', component: DefaultComponent },
   { path: 'calendar', component: CalendarComponent },
+  { path: 'contact-us', component: ContactUsListComponent },
   { path: 'chat', component: ChatComponent },
   { path: 'filemanager', component: FilemanagerComponent },
   { path: 'params', loadChildren: () => import('./params/params.module').then(m => m.ParamsModule) },

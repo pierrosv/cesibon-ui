@@ -1,0 +1,46 @@
+<!-- page title -->
+<div class="container-fluid">
+  <!-- page title -->
+  <app-page-title title="Contact Us" [breadcrumbItems]="breadCrumbItems"></app-page-title>
+
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table align-middle table-nowrap table-hover dt-responsive nowrap w-100" id="userList-table">
+              <thead class="table-light">
+              <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Email</th>
+                <th scope="col">Phone</th>
+                <th scope="col">Contact Date</th>
+                <th scope="col">Message</th>
+              </tr>
+              </thead>
+              <tbody>
+                @for (data of contactUsList; track $index) {
+                  <tr>
+                    <td>
+                      <h5 class="font-size-14 mb-1"><a href="javascript: void(0);" class="text-dark">{{data.name}}</a>
+                      </h5>
+                    </td>
+                    <td>{{data.email}}</td>
+                    <td>{{data.phone}}</td>
+                    <td>
+                      {{data.receivedAt}}
+                    </td>
+                    <td>
+                      {{data.message}}
+                    </td>
+                  </tr>}
+              </tbody>
+            </table>
+          </div>
+<!--          PAgination-->
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

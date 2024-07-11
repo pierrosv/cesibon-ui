@@ -2,16 +2,23 @@ import { MenuItem } from './menu.model';
 
 export const ADMINMENU: MenuItem[] = [
     {
-        id: 10,
+        id: 1,
         label: 'MENUITEMS.MENU.TEXT',
         isTitle: true
     },
     {
-        id: 20,
+        id: 2,
         isLayout: true
     },
   {
-    id: 30,
+    id: 10,
+    label: 'ADMIN.CONTACT_US',
+    icon: 'bx-user-voice',
+    link: '/contact-us',
+  },
+
+  {
+    id: 300,
     label: 'MENUITEMS.PARAMS.TEXT',
     icon: 'bx-home-circle',
     subItems: [

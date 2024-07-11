@@ -34,6 +34,15 @@ export class EstatePhoto {
   photoLocation: string;
 }
 
+export class ContactUs {
+  id: number;
+  receivedAt: Date;
+  name: string;
+  email: string;
+  phone: string;
+  message: string;
+}
+
 export class EstateSimple {
   id: number;
   estateType: number;

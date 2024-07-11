@@ -8,6 +8,7 @@ export const environment = {
   photoLocation: 'C:/Workbench/cesibon',
   countryUrl: 'country',
   estateUrl: 'estate',
+  adminUrl: 'admin',
   cityUrl: 'city',
   regionUrl: 'region',
   identityUrl: 'identity',

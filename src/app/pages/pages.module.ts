@@ -66,6 +66,7 @@ import { RoomEditorComponent } from './owner-estate-editor/room-editor/room-edit
 import { HouseEditorComponent } from './owner-estate-editor/house-editor/house-editor.component';
 import {AccordionModule} from "ngx-bootstrap/accordion";
 import {BsDatepickerModule} from "ngx-bootstrap/datepicker";
+import { ContactUsListComponent } from './contact-us-list/contact-us-list.component';
 
 @NgModule({
   declarations: [CalendarComponent, ChatComponent,
@@ -79,7 +80,7 @@ import {BsDatepickerModule} from "ngx-bootstrap/datepicker";
     CompanyListComponent,
     CompanyDetailComponent,
     OwnerEstateListComponent,
-    OwnerEstateEditorComponent, OwnerEstateViewerComponent, EstateOwnerComponent, CoreProfileComponent, RoomEditorComponent, HouseEditorComponent],
+    OwnerEstateEditorComponent, OwnerEstateViewerComponent, EstateOwnerComponent, CoreProfileComponent, RoomEditorComponent, HouseEditorComponent, ContactUsListComponent],
   imports: [
     CommonModule,
     FormsModule,
